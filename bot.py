@@ -1,8 +1,12 @@
-import discord
 import os
-from discord.ext import commands, tasks
 
-API_KEY = ''
+from discord.ext import commands
+
+API_KEY_FILENAME = 'apikey'
+
+# Read API key from file
+with open(API_KEY_FILENAME, 'r') as file:
+    API_KEY = file.readline().rstrip()
 
 client = commands.Bot(command_prefix=';;')
 
