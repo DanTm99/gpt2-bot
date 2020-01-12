@@ -1,8 +1,7 @@
 import os
 
-import discord
-from discord.ext import commands
 import gpt_2_simple as gpt2
+from discord.ext import commands
 
 VALID_MODELS = ['124M', '355M', '774M', '1558M']
 CONFIG_PATH = 'gpt2.config'
@@ -10,10 +9,28 @@ DEFAULT_CONFIG = {
     'model_name': '124M',
     'length': '10',
     'temperature': '0.7',
-    # 'top_k': '0',
+    'top_k': '0',  # How many previous words to consider when generating a new word. 0 means unlimited
     'top_p': '0.9',
     'include_prefix': 'True'
 }
+CONFIG_KEY_PARSER = {
+    'length': lambda i: int(i),
+    'temperature': lambda f: float(f),
+    'top_k': lambda i: int(i),
+    'top_p': lambda f: float(f),
+    'include_prefix': lambda b: b == 'True',
+}
+
+
+def parse_generate_arguments(arguments):
+    return_value = {}
+    for key in arguments:
+        if key in CONFIG_KEY_PARSER:
+            return_value[key] = CONFIG_KEY_PARSER[key](arguments[key])
+        else:  # If there is no parser keep it the same
+            return_value[key] = arguments[key]
+
+    return return_value
 
 
 class Gpt2(commands.Cog):
@@ -128,25 +145,6 @@ class Gpt2(commands.Cog):
             file.truncate()  # Erase contents of config file
             for key in self.config:
                 file.write(f'{key}={self.config[key]}\n')
-
-
-def parse_generate_arguments(arguments):
-    return_value = {}
-    for key in arguments:
-        if key == 'model_name':
-            return_value[key] = arguments[key]
-        elif key == 'length':
-            return_value[key] = int(arguments[key])
-        elif key == 'temperature':
-            return_value[key] = float(arguments[key])
-        elif key == 'top_k':
-            return_value[key] = float(arguments[key])
-        elif key == 'top_p':
-            return_value[key] = float(arguments[key])
-        elif key == 'include_prefix':
-            return_value[key] = (arguments[key] == 'True')
-
-    return return_value
 
 
 def setup(client):
