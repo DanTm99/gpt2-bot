@@ -2,7 +2,7 @@ import os
 
 from discord.ext import commands
 
-API_KEY_FILENAME = 'apikey'
+API_KEY_FILENAME = 'apikey.txt'
 
 # Read API key from file
 with open(API_KEY_FILENAME, 'r') as file:

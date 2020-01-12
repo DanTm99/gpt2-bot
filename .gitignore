@@ -2,4 +2,4 @@ models/
 venv/
 gpt2.config
 .idea/*
-apikey
+apikey.txt
