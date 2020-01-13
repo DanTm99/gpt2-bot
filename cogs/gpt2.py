@@ -25,6 +25,12 @@ CONFIG_KEY_PARSER = {
 
 
 def parse_generate_arguments(arguments):
+    """
+    Convert the config into the correct format for arguments for the generate function
+    The conversion for each argument is determined by the argument's name and CONFIG_KEY_PARSER
+    :param arguments: A dictionary from an argument name to a string representing the value for that argument
+    :return: A dictionary from an argument name to the value to be passed for that argument
+    """
     return_value = {}
     for key in arguments:
         return_value[key] = CONFIG_KEY_PARSER[key](arguments[key])
@@ -34,16 +40,20 @@ def parse_generate_arguments(arguments):
 
 def is_valid_config(config):
     """
-
     :param config: A string representing the name of a config
-    :return: Whether or not the config is used by this program
+    :return: Whether or not the config is recognised by this program
     """
     return config in CONFIG_KEY_PARSER
 
 
 def is_valid_config_value(config, value):
+    """
+    :param config: A string representing the name of a config
+    :param value: A string representing a value for the config
+    :return: Whether or not the the value for a recognised config is in the correct format
+    """
     try:
-        CONFIG_KEY_PARSER[config](value)  # Check if the parser for this config works
+        CONFIG_KEY_PARSER[config](value)
     except ValueError or KeyError:
         return False
     return True
@@ -52,6 +62,14 @@ def is_valid_config_value(config, value):
 class Gpt2(commands.Cog):
 
     def __init__(self, client):
+        """
+        Read the config from the file at the path CONFIG_PATH, if the config file is not in the expected format or
+        contains a config that isn't recognised, the config is loaded from the dictionary DEFAULT_CONFIG.
+
+        Initialise a TensorFlow session for gpt2 then load the GPT2 model as determined by the config.
+
+        NOTE: If the config is modified after the DEFAULT_CONFIG has been loaded it, it will be overwritten.
+        """
         self.client = client
         self.config = {}
         self.load_config(False)
@@ -61,6 +79,11 @@ class Gpt2(commands.Cog):
 
     @commands.command(aliases=['generate', 'gpt2'])
     async def gpt2_generate(self, ctx, *, arg=None):
+        """
+        Generate a text sample from a given prompt using GPT-2.
+        The arguments and their values for the generation is determined by the config.
+        :param arg: The prompt to generate the text sample on
+        """
         print('Command gpt2_generate triggered')
         await ctx.send("Generating...")
         if arg:
@@ -78,24 +101,33 @@ class Gpt2(commands.Cog):
 
     @commands.command(aliases=['set_model'])
     async def gpt2_set_model(self, ctx, *, arg=None):
+        """
+        Set the name of the GPT-2 model in the config by setting model_name if it's a valid model name.
+        :param arg: The value to set model_name to
+        """
         print('Command gpt2_set_model triggered')
         if arg:
             if arg in VALID_MODELS:
                 self.update_config(model_name=arg)
             else:
-                await ctx.send("ERROR: Invalid argument")
+                await ctx.send(f"ERROR: Invalid model name {arg}")
         else:
             await ctx.send("ERROR: Argument required")
 
     @commands.command(aliases=['set_length'])
     async def gpt2_set_length(self, ctx, *, arg=None):
+        """
+        Set the length of the samples produced by GPT-2 when producing samples.
+        The value represents the number of tokens (i.e. words) each produced sample will contain.
+        :param arg: The value to set length to. This must be a positive integer
+        """
         print('Command gpt2_set_length triggered')
         if arg:
             try:
                 i = int(arg)
                 assert i > 0
             except ValueError or AssertionError:
-                ctx.send("ERROR: Argument must be a positive whole number")
+                ctx.send("ERROR: Argument must be a positive integer number")
             self.update_config(length=arg)
         else:
             await ctx.send("ERROR: Argument required")
