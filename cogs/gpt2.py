@@ -164,7 +164,7 @@ class Gpt2(commands.Cog):
             self.write_config()
 
     def reset_config(self, write=True):
-        self.config = DEFAULT_CONFIG
+        self.config = DEFAULT_CONFIG.copy()
 
         if write:
             self.write_config()
