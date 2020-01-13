@@ -41,6 +41,8 @@ class Gpt2(commands.Cog):
         self.n = None
 
         self.config = {}
+        # If the config file is invalid the default config will be loaded
+        # If the config is modified via command this will overwrite the invalid config file
         self.load_config(False)
         gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
 
