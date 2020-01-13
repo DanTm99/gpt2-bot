@@ -62,17 +62,14 @@ class Gpt2(commands.Cog):
         gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
 
     @commands.command(aliases=['generate', 'gpt2'])
-    async def gpt2_generate(self, ctx, *, arg=None, **kwargs):
+    async def gpt2_generate(self, ctx, *, arg=None):
         print('Command gpt2_generate triggered')
         await ctx.send("Generating...")
         if arg:
             if self.is_model_downloaded():
                 if arg:
                     args = parse_generate_arguments(self.config)
-                    if 'n' in kwargs:
-                        sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, length=kwargs['n'], **args)[0]
-                    else:
-                        sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, **args)[0]
+                    sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, **args)[0]
                     await ctx.send(sample)
                 else:
                     await ctx.send("ERROR: Argument required")
