@@ -13,7 +13,9 @@ DEFAULT_CONFIG = {
     'top_p': '0.9',
     'include_prefix': 'True'
 }
+# A dictionary from argument names to a lambda that determines how to parse the string representing its value
 CONFIG_KEY_PARSER = {
+    'model_name': lambda s: s,
     'length': lambda i: int(i),
     'temperature': lambda f: float(f),
     'top_k': lambda i: int(i),
@@ -25,16 +27,18 @@ CONFIG_KEY_PARSER = {
 def parse_generate_arguments(arguments):
     return_value = {}
     for key in arguments:
-        if key in CONFIG_KEY_PARSER:
-            return_value[key] = CONFIG_KEY_PARSER[key](arguments[key])
-        else:  # If there is no parser keep it the same
-            return_value[key] = arguments[key]
+        return_value[key] = CONFIG_KEY_PARSER[key](arguments[key])
 
     return return_value
 
 
 def is_valid_config(config):
-    return config in DEFAULT_CONFIG
+    """
+
+    :param config: A string representing the name of a config
+    :return: Whether or not the config is used by this program
+    """
+    return config in CONFIG_KEY_PARSER
 
 
 def is_valid_config_value(config, value):
