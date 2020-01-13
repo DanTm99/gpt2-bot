@@ -119,8 +119,12 @@ class Gpt2(commands.Cog):
 
     def update_config(self, write=True, **kwargs):
         for key in kwargs:
-            if key in self.config:
-                self.config[key] = kwargs[key]
+            if is_valid_config(key):
+                value = kwargs[key]
+                if is_valid_config_value(key, value):
+                    self.config[key] = value
+                else:
+                    print(f'Invalid config {key}={value}')
             else:
                 print(f'Invalid config key: {key}')
 
@@ -138,7 +142,11 @@ class Gpt2(commands.Cog):
             with open(CONFIG_PATH, 'r') as file:
                 for line in file:
                     key, value = line.rstrip().split('=')
-                    self.config[key] = value
+                    if is_valid_config_value(key, value):
+                        self.config[key] = value
+                    else:
+                        self.reset_config(write_if_default)  # Load default config instead
+                        return
         else:
             self.reset_config(write_if_default)
 
