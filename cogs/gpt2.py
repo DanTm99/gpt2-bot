@@ -54,7 +54,6 @@ class Gpt2(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.sess = gpt2.start_tf_sess()
-        self.n = None
 
         self.config = {}
         # If the config file is invalid the default config will be loaded
