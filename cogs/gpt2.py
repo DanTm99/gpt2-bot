@@ -44,7 +44,7 @@ class Gpt2(commands.Cog):
         self.load_config()
         gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
 
-    @commands.command(aliases=['generate'])
+    @commands.command(aliases=['generate', 'gpt2'])
     async def gpt2_generate(self, ctx, *, arg=None, **kwargs):
         print('Command gpt2_generate triggered')
         await ctx.send("Generating...")
