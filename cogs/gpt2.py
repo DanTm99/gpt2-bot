@@ -53,12 +53,10 @@ class Gpt2(commands.Cog):
 
     def __init__(self, client):
         self.client = client
-        self.sess = gpt2.start_tf_sess()
-
         self.config = {}
-        # If the config file is invalid the default config will be loaded
-        # If the config is modified via command this will overwrite the invalid config file
         self.load_config(False)
+
+        self.sess = gpt2.start_tf_sess()
         gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
 
     @commands.command(aliases=['generate', 'gpt2'])
