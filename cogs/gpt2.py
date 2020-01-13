@@ -41,7 +41,7 @@ class Gpt2(commands.Cog):
         self.n = None
 
         self.config = {}
-        self.load_config()
+        self.load_config(False)
         gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
 
     @commands.command(aliases=['generate', 'gpt2'])
