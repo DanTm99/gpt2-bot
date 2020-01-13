@@ -33,6 +33,18 @@ def parse_generate_arguments(arguments):
     return return_value
 
 
+def is_valid_config(config):
+    return config in DEFAULT_CONFIG
+
+
+def is_valid_config_value(config, value):
+    try:
+        CONFIG_KEY_PARSER[config](value)  # Check if the parser for this config works
+    except ValueError or KeyError:
+        return False
+    return True
+
+
 class Gpt2(commands.Cog):
 
     def __init__(self, client):
@@ -87,6 +99,22 @@ class Gpt2(commands.Cog):
             except ValueError or AssertionError:
                 ctx.send("ERROR: Argument must be a positive whole number")
             self.update_config(length=arg)
+        else:
+            await ctx.send("ERROR: Argument required")
+
+    @commands.command(aliases=['config'])
+    async def gpt2_set_config(self, ctx, *, arg=None):
+        print('Command gpt2_set_config triggered')
+        if arg:
+            configs = {key: value for [key, value] in [a.split('=') for a in arg.split(' ')]}
+            for config in configs:
+                if not is_valid_config(config):  # Check if the config name exists
+                    await ctx.send(f"ERROR: Invalid config name {config}")
+                    return
+                elif not is_valid_config_value(config, configs[config]):
+                    await ctx.send(f"ERROR: Invalid config {config}={configs[config]}")
+                    return
+            self.update_config(**configs)
         else:
             await ctx.send("ERROR: Argument required")
 
