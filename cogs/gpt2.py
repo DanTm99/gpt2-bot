@@ -189,7 +189,11 @@ class Gpt2(commands.Cog):
         print('Command gpt2_custom triggered')
         if model_name:
             if not arg:
-                arg = self.default_prompts[model_name]
+                if model_name in self.default_prompts:
+                    arg = self.default_prompts[model_name]
+                else:
+                    await ctx.send('ERROR: Prompt required')
+                    return
             generate_args = parse_generate_arguments(self.config)
             generate_args['model_name'] = model_name
             generate_args['include_prefix'] = False
