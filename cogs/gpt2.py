@@ -209,6 +209,17 @@ class Gpt2(commands.Cog):
         else:
             await ctx.send('ERROR: Argument required')
 
+    @commands.command(aliases=['default_prompt', 'prompt'])
+    async def gpt2_set_default_prompt(self, ctx, model_name=None, *, arg=None):
+        if model_name:
+            if arg:
+                self.default_prompts[model_name] = arg
+                write_dictionary(self.default_prompts, DEFAULT_PROMPTS_PATH)
+            else:
+                await ctx.send("ERROR: Default prompt cannot be blank")
+        else:
+            await ctx.send("ERROR: Missing model name")
+
     def is_model_downloaded(self):
         model_name = self.config['model_name']
         return os.path.exists(f'models/{model_name}')
