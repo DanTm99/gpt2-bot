@@ -169,7 +169,7 @@ class Gpt2(commands.Cog):
     async def gpt2_reset_config(self, ctx, *, arg=None):
         print('Command gpt2_reset_config triggered')
         if arg:
-            await ctx.send('Argument not allowed')
+            await ctx.send('ERROR: Argument not allowed')
         else:
             self.reset_config()
             await ctx.send('Config reset')
