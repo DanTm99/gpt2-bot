@@ -3,8 +3,9 @@ import os
 import gpt_2_simple as gpt2
 from discord.ext import commands
 
-VALID_MODELS = ['124M', '355M', '774M', '1558M']
 CONFIG_PATH = 'gpt2.config'
+DEFAULT_PROMPTS_PATH = 'default_prompts.txt'
+VALID_MODELS = ['124M', '355M', '774M', '1558M']
 DEFAULT_CONFIG = {
     'model_name': '124M',
     'length': '10',
@@ -59,6 +60,14 @@ def is_valid_config_value(config, value):
     return True
 
 
+def load_default_prompts():
+    if os.path.exists(DEFAULT_PROMPTS_PATH):
+        with open(DEFAULT_PROMPTS_PATH, 'r') as file:
+            return {key: value for [key, value] in (line.rstrip().split('=') for line in file)}
+    else:
+        return {}
+
+
 class Gpt2(commands.Cog):
 
     def __init__(self, client):
@@ -73,6 +82,7 @@ class Gpt2(commands.Cog):
         self.client = client
         self.config = {}
         self.load_config(False)
+        self.default_prompts = load_default_prompts()
 
         self.sess = gpt2.start_tf_sess()
         gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
@@ -179,7 +189,7 @@ class Gpt2(commands.Cog):
         print('Command gpt2_custom triggered')
         if model_name:
             if not arg:
-                arg = self.default_prompt[model_name]
+                arg = self.default_prompts[model_name]
             generate_args = parse_generate_arguments(self.config)
             generate_args['model_name'] = model_name
             generate_args['include_prefix'] = False
