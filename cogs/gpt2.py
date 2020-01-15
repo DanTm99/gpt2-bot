@@ -166,10 +166,13 @@ class Gpt2(commands.Cog):
                 await ctx.send("ERROR: Invalid model_name in config")
 
     @commands.command(aliases=['reset_config'])
-    async def gpt2_reset_config(self, ctx):
+    async def gpt2_reset_config(self, ctx, *, arg=None):
         print('Command gpt2_reset_config triggered')
-        self.reset_config()
-        await ctx.send('Config reset')
+        if arg:
+            await ctx.send('Argument not allowed')
+        else:
+            self.reset_config()
+            await ctx.send('Config reset')
 
     def is_model_downloaded(self):
         model_name = self.config['model_name']
