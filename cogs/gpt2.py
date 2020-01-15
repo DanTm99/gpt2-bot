@@ -89,8 +89,8 @@ class Gpt2(commands.Cog):
         if arg:
             if self.is_model_downloaded():
                 if arg:
-                    args = parse_generate_arguments(self.config)
-                    sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, **args)[0]
+                    generate_args = parse_generate_arguments(self.config)
+                    sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, **generate_args)[0]
                     await ctx.send(sample)
                 else:
                     await ctx.send("ERROR: Argument required")
