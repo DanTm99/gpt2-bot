@@ -185,9 +185,9 @@ class Gpt2(commands.Cog):
                 if is_valid_config_value(key, value):
                     self.config[key] = value
                 else:
-                    print(f'Invalid config {key}={value}')
+                    print(f'ERROR: Invalid config {key}={value}')
             else:
-                print(f'Invalid config key: {key}')
+                print(f'ERROR: Invalid config key {key}')
 
         if write:
             self.write_config()
