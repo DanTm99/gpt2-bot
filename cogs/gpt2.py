@@ -69,6 +69,13 @@ def load_default_prompts():
 
 
 def write_dictionary(dictionary, path):
+    """
+    Write the contents of a dictionary to a file with contents in the form key=value on each line.
+    The keys and values must be a type that can be converted to a from a string.
+    If a file already exists in the filepath it will be overwritten.
+    :param dictionary: The dictionary to write to file
+    :param path: The path of the file to write to
+    """
     with open(path, 'w+') as file:
         file.truncate()  # Erase contents of config file
         for key in dictionary:
