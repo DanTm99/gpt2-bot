@@ -146,7 +146,7 @@ class Gpt2(commands.Cog):
     async def gpt2_set_config(self, ctx, *, arg=None):
         print('Command gpt2_set_config triggered')
         if arg:
-            configs = {key: value for [key, value] in [a.split('=') for a in arg.split(' ')]}
+            configs = {key: value for [key, value] in (a.split('=') for a in arg.split(' '))}
             for config in configs:
                 if not is_valid_config(config):  # Check if the config name exists
                     await ctx.send(f"ERROR: Invalid config name {config}")
