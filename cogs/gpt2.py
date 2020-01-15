@@ -61,6 +61,10 @@ def is_valid_config_value(config, value):
 
 
 def read_default_prompts():
+    """
+    Read the default prompts from a file with contents in the form model_name=prompt on each line.
+    :return: A dictionary with model names as keys and the prompts as values, both being strings.
+    """
     if os.path.exists(DEFAULT_PROMPTS_PATH):
         with open(DEFAULT_PROMPTS_PATH, 'r') as file:
             return {key: value for [key, value] in (line.rstrip().split('=') for line in file)}
