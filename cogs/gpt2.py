@@ -60,7 +60,7 @@ def is_valid_config_value(config, value):
     return True
 
 
-def load_default_prompts():
+def read_default_prompts():
     if os.path.exists(DEFAULT_PROMPTS_PATH):
         with open(DEFAULT_PROMPTS_PATH, 'r') as file:
             return {key: value for [key, value] in (line.rstrip().split('=') for line in file)}
@@ -96,7 +96,7 @@ class Gpt2(commands.Cog):
         self.client = client
         self.config = {}
         self.load_config(False)
-        self.default_prompts = load_default_prompts()
+        self.default_prompts = read_default_prompts()
 
         self.sess = gpt2.start_tf_sess()
         gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
