@@ -5,7 +5,7 @@ from discord.ext import commands
 
 CONFIG_PATH = 'gpt2.config'
 DEFAULT_PROMPTS_PATH = 'default_prompts.txt'
-VALID_MODELS = ['124M', '355M', '774M', '1558M']
+VALID_DEFAULT_MODELS = ['124M', '355M', '774M', '1558M']
 DEFAULT_CONFIG = {
     'model_name': '124M',
     'length': '10',
@@ -135,7 +135,7 @@ class Gpt2(commands.Cog):
         """
         print('Command gpt2_set_model triggered')
         if arg:
-            if arg in VALID_MODELS:
+            if arg in VALID_DEFAULT_MODELS:
                 self.update_config(model_name=arg)
             else:
                 await ctx.send(f"ERROR: Invalid model name {arg}")
@@ -181,14 +181,14 @@ class Gpt2(commands.Cog):
         print('Command gpt2_download_model triggered')
 
         if arg:
-            if arg in VALID_MODELS:
+            if arg in VALID_DEFAULT_MODELS:
                 gpt2.download_gpt2(model_name=arg)
                 await ctx.send("Model downloaded")
             else:
                 await ctx.send("ERROR: Invalid argument")
-        else:
+        else:  # If no model name is provided, download the one in the config
             model_name = self.config['model_name']
-            if model_name in VALID_MODELS:
+            if model_name in VALID_DEFAULT_MODELS:
                 gpt2.download_gpt2(model_name=model_name)
             else:
                 await ctx.send("ERROR: Invalid model_name in config")
