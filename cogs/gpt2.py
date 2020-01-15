@@ -174,6 +174,20 @@ class Gpt2(commands.Cog):
             self.reset_config()
             await ctx.send('Config reset')
 
+    @commands.command(aliases=['custom'])
+    async def gpt2_custom(self, ctx, model_name=None, *, arg=None):
+        print('Command gpt2_custom triggered')
+        if model_name:
+            if not arg:
+                arg = self.default_prompt[model_name]
+            generate_args = parse_generate_arguments(self.config)
+            generate_args['model_name'] = model_name
+            generate_args['include_prefix'] = False
+            sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, **generate_args)[0]
+            await ctx.send(sample)
+        else:
+            await ctx.send('ERROR: Argument required')
+
     def is_model_downloaded(self):
         model_name = self.config['model_name']
         return os.path.exists(f'models/{model_name}')
