@@ -68,6 +68,13 @@ def load_default_prompts():
         return {}
 
 
+def write_dictionary(dictionary, path):
+    with open(path, 'w+') as file:
+        file.truncate()  # Erase contents of config file
+        for key in dictionary:
+            file.write(f'{key}={dictionary[key]}\n')
+
+
 class Gpt2(commands.Cog):
 
     def __init__(self, client):
@@ -218,13 +225,13 @@ class Gpt2(commands.Cog):
                 print(f'ERROR: Invalid config key {key}')
 
         if write:
-            self.write_config()
+            write_dictionary(self.config, CONFIG_PATH)
 
     def reset_config(self, write=True):
         self.config = DEFAULT_CONFIG.copy()
 
         if write:
-            self.write_config()
+            write_dictionary(self.config, CONFIG_PATH)
 
     def load_config(self, write_if_default=True):
         if os.path.exists(CONFIG_PATH):
@@ -238,12 +245,6 @@ class Gpt2(commands.Cog):
                         return
         else:
             self.reset_config(write_if_default)
-
-    def write_config(self):
-        with open(CONFIG_PATH, 'w+') as file:
-            file.truncate()  # Erase contents of config file
-            for key in self.config:
-                file.write(f'{key}={self.config[key]}\n')
 
 
 def setup(client):
