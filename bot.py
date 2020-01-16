@@ -3,7 +3,7 @@ import os
 from discord.ext import commands
 
 API_KEY_FILENAME = 'apikey.txt'
-COMMAND_PREFIX = '[['
+COMMAND_PREFIX = ';;'
 api_key = None
 
 # Read API key from file
