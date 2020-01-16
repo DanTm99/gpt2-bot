@@ -5,8 +5,12 @@ from discord.ext import commands
 API_KEY_FILENAME = 'apikey.txt'
 
 # Read API key from file
-with open(API_KEY_FILENAME, 'r') as file:
-    API_KEY = file.readline().rstrip()
+try:
+    with open(API_KEY_FILENAME, 'r') as file:
+        api_key = file.readline().rstrip()
+except FileNotFoundError:
+    print(f'ERROR: API key file {API_KEY_FILENAME} not found')
+    exit(0)
 
 client = commands.Bot(command_prefix=';;')
 
@@ -17,5 +21,4 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
         print(f'Loaded {filename[:-3]}')
 
-
-client.run(API_KEY)
+client.run(api_key)
