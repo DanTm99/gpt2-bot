@@ -103,7 +103,11 @@ class Gpt2(commands.Cog):
         self.default_prompts = read_default_prompts()
 
         self.sess = gpt2.start_tf_sess()
-        gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
+        try:
+            gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
+        except ValueError:
+            self.sess = gpt2.reset_session(self.sess)
+            gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
 
     @commands.command(aliases=['generate', 'gpt2'])
     async def gpt2_generate(self, ctx, *, arg=None):
