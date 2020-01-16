@@ -6,12 +6,13 @@ API_KEY_FILENAME = 'apikey.txt'
 api_key = None
 
 # Read API key from file
-try:
-    with open(API_KEY_FILENAME, 'r') as file:
-        api_key = file.readline().rstrip()
-except FileNotFoundError:
-    print(f'ERROR: API key file {API_KEY_FILENAME} not found')
-    exit(0)
+if not api_key:
+    try:
+        with open(API_KEY_FILENAME, 'r') as file:
+            api_key = file.readline().rstrip()
+    except FileNotFoundError:
+        print(f'ERROR: API key file {API_KEY_FILENAME} not found')
+        exit(0)
 
 client = commands.Bot(command_prefix=';;')
 
