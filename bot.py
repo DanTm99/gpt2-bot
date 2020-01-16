@@ -3,6 +3,7 @@ import os
 from discord.ext import commands
 
 API_KEY_FILENAME = 'apikey.txt'
+COMMAND_PREFIX = '[['
 api_key = None
 
 # Read API key from file
@@ -14,7 +15,7 @@ if not api_key:
         print(f'ERROR: API key file {API_KEY_FILENAME} not found')
         exit(0)
 
-client = commands.Bot(command_prefix=';;')
+client = commands.Bot(command_prefix=COMMAND_PREFIX)
 
 
 # Load all .py files in cog folder
