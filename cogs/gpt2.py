@@ -127,7 +127,7 @@ class Gpt2(commands.Cog):
                 else:
                     await ctx.send("ERROR: Argument required")
             else:
-                await ctx.send(f"ERROR: Model {DEFAULT_CONFIG['model_name']} not downloaded")
+                await ctx.send(f"ERROR: Model {self.config['model_name']} not downloaded")
         else:
             await ctx.send("ERROR: Argument required")
 
