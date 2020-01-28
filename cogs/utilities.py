@@ -1,4 +1,5 @@
-import discord
+import subprocess
+
 from discord.ext import commands
 
 
@@ -26,6 +27,19 @@ class Utilities(commands.Cog):
         self.client.load_extension(f'cogs.{extension}')
         print(f'Loaded {extension}')
         await ctx.send(f'Reloaded {extension}')
+
+    @commands.command()
+    async def update(self, ctx, *, arg=None):
+        print('Command update triggered')
+        await ctx.send('Updating and shutting down...')
+        subprocess.call('git pull')
+        await ctx.bot.logout()
+
+    @commands.command()
+    async def stop(self, ctx, *, arg=None):
+        print('Command stop triggered')
+        await ctx.send('Shutting down...')
+        await ctx.bot.logout()
 
 
 def setup(client):
