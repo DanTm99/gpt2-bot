@@ -15,7 +15,7 @@ Install the required packages:
 pip3 install -r requirements.txt
 ```
 
-You may install a version of TensorFlow that will utilise your GPU instead if you wish. **TensorFlow 2.0 is currently not supported** and the gpt-2-simple package will throw an assertion if it's installed, so TensorFlow 1.14/1.15 is recommended.
+You may install a version of TensorFlow that will utilise your GPU instead if you wish. **TensorFlow 2.0 is currently not supported** and the gpt-2-simple package will throw an assertion if it's installed, so TensorFlow 1.15.2 is recommended.
 
 Create `apikey.txt` containing the api key for your bot:
 ```shell
