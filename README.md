@@ -30,7 +30,7 @@ python3 bot.py
 
 ## Usage
 
-By default messages must start with `;;` to be recognised as a command. This can be changed by changing `COMMAND_PREFIX` in `bot.py`.
+This bot responds to commands sent to any Discord server it's a part of. By default messages must start with `;;` to be recognised as a command. This can be changed by changing `COMMAND_PREFIX` in `bot.py`.
 
 `;;download_model` downloads the GPT-2 model and must be used to generate text.
 
