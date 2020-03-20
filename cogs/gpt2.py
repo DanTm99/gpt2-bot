@@ -110,7 +110,7 @@ class Gpt2(commands.Cog):
             gpt2.load_gpt2(self.sess, model_name=self.config['model_name'])
 
     @commands.command(aliases=['generate', 'gpt2'])
-    async def gpt2_generate(self, ctx, *, arg=None):
+    async def gpt2_generate(self, ctx, *, arg=''):
         """
         Generate a text sample from a given prompt using GPT-2.
         The arguments and their values for the generation is determined by the config.
@@ -118,18 +118,12 @@ class Gpt2(commands.Cog):
         """
         print('Command gpt2_generate triggered')
         await ctx.send("Generating...")
-        if arg:
-            if gpt2.is_gpt2_downloaded(model_name=self.config['model_name']):
-                if arg:
-                    generate_args = parse_generate_arguments(self.config)
-                    sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, **generate_args)[0]
-                    await ctx.send(sample)
-                else:
-                    await ctx.send("ERROR: Argument required")
-            else:
-                await ctx.send(f"ERROR: Model {self.config['model_name']} not downloaded")
+        if gpt2.is_gpt2_downloaded(model_name=self.config['model_name']):
+            generate_args = parse_generate_arguments(self.config)
+            sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, **generate_args)[0]
+            await ctx.send(sample)
         else:
-            await ctx.send("ERROR: Argument required")
+            await ctx.send(f"ERROR: Model {self.config['model_name']} is not downloaded")
 
     @commands.command(aliases=['set_model'])
     async def gpt2_set_model(self, ctx, *, arg=None):
