@@ -15,7 +15,7 @@ DEFAULT_PROMPTS_PATH = 'default_prompts.txt'
 VALID_DEFAULT_MODELS = ['124M', '355M', '774M', '1558M']
 DEFAULT_CONFIG = {
     'model_name': '124M',
-    'length': '10',
+    'length': '100',
     'temperature': '0.7',
     'top_k': '0',  # How many previous words to consider when generating a new word. 0 means unlimited
     'top_p': '0.9',
