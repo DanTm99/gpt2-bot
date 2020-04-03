@@ -117,9 +117,9 @@ class Gpt2(commands.Cog):
         :param arg: The prompt to generate the text sample on
         """
         print('Command gpt2_generate triggered')
-        await ctx.send("Generating...")
         if gpt2.is_gpt2_downloaded(model_name=self.config['model_name']):
             generate_args = parse_generate_arguments(self.config)
+            await ctx.send("Generating...")
             sample = gpt2.generate(self.sess, prefix=arg, return_as_list=True, **generate_args)[0]
             await ctx.send(sample)
         else:
