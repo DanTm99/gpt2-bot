@@ -165,7 +165,7 @@ class Gpt2(commands.Cog):
         else:
             await ctx.send("ERROR: Argument required")
 
-    @commands.command(aliases=['config'])
+    @commands.command(aliases=['set_config', 'config'])
     async def gpt2_set_config(self, ctx, *, arg=None):
         print('Command gpt2_set_config triggered')
         if arg:
