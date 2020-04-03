@@ -158,7 +158,7 @@ class Gpt2(commands.Cog):
         if arg:
             try:
                 i = int(arg)
-                assert i > 0
+                assert (i > 0) and (i < 1024)
             except ValueError or AssertionError:
                 ctx.send("ERROR: Argument must be a positive integer number")
             self.update_config(length=arg)
