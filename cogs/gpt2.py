@@ -1,7 +1,14 @@
+import logging
 import os
 
-import gpt_2_simple as gpt2
 from discord.ext import commands
+
+# Source: https://github.com/tensorflow/tensorflow/issues/27023#issuecomment-475544248
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Used to disable TensorFlow printing debug messages
+# Source: https://github.com/tensorflow/tensorflow/issues/8340#issuecomment-332212742
+logging.getLogger('tensorflow').disabled = True  # Used to disable TensorFlow printing warning messages
+
+import gpt_2_simple as gpt2
 
 CONFIG_PATH = 'gpt2.config'
 DEFAULT_PROMPTS_PATH = 'default_prompts.txt'
