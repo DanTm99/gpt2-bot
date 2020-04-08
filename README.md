@@ -5,17 +5,24 @@ A simple discord bot written in Python that utilises existing Python libraries t
 ## Setup
 
 Clone the repository and navigate into it:
+
 ```shell
 git clone https://github.com/DanTm99/gpt2-bot.git
 cd gpt2-bot
 ```
 
-Install the required packages:
+To use this with your GPU you must have and NVIDIA GPU with a CUDA Compute Capability 3.5 or higher.
+
+If you have the required hardware you must install the required software on your system as shown [here](https://www.tensorflow.org/install/gpu#software_requirements).
+
+Install the required packages as normal to use this with GPU support:
+
 ```shell
 pip3 install -r requirements.txt
 ```
 
 To use this without GPU support use the following command instead:
+
 ```shell
 pip3 install -r requirements-no-gpu.txt
 ```
@@ -26,12 +33,14 @@ This has only been tested with the versions of the requirements as given in `req
 **TensorFlow 2.0 is currently not supported** and the gpt-2-simple package will throw an assertion if it's installed, so TensorFlow 1.15.2 is recommended.
 
 Create `apikey.txt` containing the api key for your bot:
+
 ```shell
 echo "[API_KEY]" > apikey.txt
 ```
 Replace `[API_KEY]` with your api key.
 
 Run `bot.py` to start the bot:
+
 ```shell
 python3 bot.py
 ```
