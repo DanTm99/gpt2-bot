@@ -27,11 +27,6 @@ To use this without GPU support use the following command instead:
 pip3 install -r requirements-no-gpu.txt
 ```
 
-This has only been tested with the versions of the requirements as given in `requirements.txt`. You may update packages beyond these versions if you wish.
-
-
-**TensorFlow 2.0 is currently not supported** and the gpt-2-simple package will throw an assertion if it's installed, so TensorFlow 1.15.2 is recommended.
-
 Create `apikey.txt` containing the api key for your bot:
 
 ```shell
